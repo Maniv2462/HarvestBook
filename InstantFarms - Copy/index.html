@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InstantFarms</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header" style="position: sticky; top: 0; z-index: 1000; display: flex; justify-content: center; align-items: center;">    
+    <h1 style="margin: 0;">🌿 INSTANTFARMS</h1>
+    <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px;">
+        <button id="notebookBtn" onclick="toggleNotebook()" style="margin: 0; padding: 6px 12px; font-size: 14px; background: #F59E0B; border: none; border-radius: 6px; color: white; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">📒 Notebook</button>
+        <button onclick="toggleTheme()" id="themeBtn" style="margin: 0; padding: 6px 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); box-shadow: none; border-radius: 6px; color: white; cursor: pointer;">🌙 Dark</button>
+    </div>
+</header>
+
+<div class="container">
+    <div id="screen0" class="screen">
+        <h1><center>📋<i><u>రైతు డెలివరీ నోట్</u></i></center></h1>
+        <div class="row"><div class="col"><label>రైతు పేరు / Farmer Name *</label><input id="farmerName" type="text" placeholder="రైతు పేరు" required></div><div class="col"><label>తేదీ / Date</label><input id="date" type="date" placeholder="తేదీ"></div></div>
+        <div class="row"><div class="col"><label>అడ్రస్సు / Address</label><input id="address" placeholder="అడ్రస్సు"></div><div class="col"><label>ఎచ్చట నుండి / From</label><input id="from" placeholder="ఎచ్చట నుండి"></div><div class="col"><label>ఎచ్చటకు / To</label><input id="to" placeholder="ఎచ్చటకు"></div></div>
+        <h2>🌾 పంట వివరాలు / Crop Details</h2>
+        <div class="row"><div class="col"><label>సరుకుల వివరం / Product</label><input id="product" placeholder="సరుకుల వివరం"></div><div class="col"><label>మొత్తం తూకం / Weight</label><input id="weight" type="number" placeholder="మొత్తం తూకం"></div><div class="col"><label>ధర / Rate</label><input id="rate" type="number" placeholder="ధర"></div><div class="col"><label>మొత్తం ఖరీదు / Total</label><input id="total" value="Kataprakaram" placeholder="మొత్తం ఖరీదు"></div></div>
+        <h2>🚛 వాహన వివరాలు / Vehicle Details</h2>
+        <div class="row"><div class="col"><label>వాహనం నెంబర్ / Vehicle Number</label><input id="vehicle" placeholder="వాహనం నెంబర్"></div><div class="col"><label>ఓనర్ పేరు / Driver Name</label><input id="driver" placeholder="ఓనర్ పేరు"></div></div>
+        <h2>🏪 అమ్మకం స్థలం / Sale Destination</h2>
+        <div class="row"><div class="col"><label>విక్రమునుకై ఎవరి కొట్టుకు తీసుకొని వెళ్ళుచున్నది వారి అడ్రస్సు</label><input id="saleAddress" placeholder="Manual Address"><input id="saleAddressAuto" readonly class="hidden"></div></div>
+        <h2>📝 గమనిక / Special Note</h2>
+        <div class="row"><div class="col"><label>ఏదైనా అదనపు సమాచారం (Optional)</label><textarea id="specialNote" rows="3" placeholder="ఇక్కడ వ్రాయండి / Write any extra details here..." style="width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical;"></textarea></div></div>
+        <h2>💰 ఖాతా వివరాలు / Account Details</h2>
+        <div class="row"><div class="col"><label>కిరాయి / Hire</label><input id="hire" type="number"></div><div class="col"><label>అడ్వాన్స్ / Extra</label><input id="extra" type="number"></div><div class="col"><label>బ్యాలెన్స్ / Final Amount</label><input id="final" readonly></div></div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button onclick="goToPreview()" style="width: 100%;">👁 Preview</button>
+            <button onclick="toggleHistory()" id="historyBtn" style="width: 100%; background-color: #6B7280;">📜 History</button>
+        </div>
+
+        <div id="historyContainer" class="hidden" style="margin-top: 20px; border-top: 2px solid var(--border-color); padding-top: 20px;">
+            <h2 style="margin-top: 0;">📜 గత చరిత్ర / Past Notes</h2>
+            <div id="historyList" style="max-height: 350px; overflow-y: auto; padding-right: 5px;"></div>
+        </div>
+    </div>
+
+    <div id="screen1" class="screen hidden">
+        <h2>👁 Preview / ప్రివ్యూ</h2>
+        <div id="previewData"></div>
+        <h3>✍️ సంతకం చేయండి / Sign Here</h3>
+        <canvas id="previewSignature" width="300" height="120"></canvas><br>
+        <button onclick="clearPreviewSignature()">Clear Signature</button>
+        <button onclick="goScreen(0)">✏️ Edit</button>
+        <button onclick="location.reload()">❌ Cancel</button>
+        <button onclick="generateNote()">🖼 Generate Note</button>
+    </div>
+
+    <div id="screen2" class="screen hidden">
+        <div id="note">
+            <p id="noteNumber"></p>
+            <div id="noteContent"></div>
+        </div>
+        <button onclick="goScreen(0)">✏️ Edit</button>
+        <button onclick="location.reload()">🔄 New</button>
+        <button onclick="window.print()">🖨 Print</button>
+        <button onclick="downloadImage()">⬇ Download</button>
+        <button onclick="shareImage()" style="background-color: #25D366;">📲 Share</button>
+    </div>
+    
+    <div id="screen4" class="screen hidden">
+        <h2 id="notebookMainTitle">📒 Notebook Ledger</h2>
+        
+        <div class="row">
+            <div class="col"><label>DATE</label><input id="nbDate" type="date"></div>
+            <div class="col"><label>VEHICLE</label><input id="nbVehicle" type="text" style="text-transform: uppercase;"></div>
+            <div class="col"><label>MC</label><input id="nbMC1" type="text"></div>
+            <div class="col"><label>NET WT</label><input id="nbNetWT" type="text" oninput="calcNotebook()"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label>NET WEIGHT</label><input id="nbNetWeight" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>MC</label><input id="nbMC2" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>MC CUT</label><input id="nbMCCut" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>FINAL WEIGHT</label><input id="nbFinalWeight" type="number" readonly></div>
+        </div>
+        <div class="row">
+            <div class="col"><label>RATE</label><input id="nbRate" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>AMOUNT</label><input id="nbAmount" readonly></div>
+            <div class="col"><label>FRIGHTDIF</label><input id="nbFrightDif" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>FRIGHT</label><input id="nbFright" type="number" oninput="calcNotebook()"></div>
+        </div>
+        <div class="row">
+            <div class="col"><label>RUSUM</label><input id="nbRusum" type="number" oninput="calcNotebook()"></div>
+            <div class="col"><label>NET AMOUNT</label><input id="nbNetAmount" readonly></div>
+        </div>
+        <button id="saveBtn" onclick="saveNotebookEntry()" style="width: 100%; background: #F59E0B; margin-bottom: 20px;">💾 Save Ledger Entry</button>
+
+        <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; border: 1px solid #10B981; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #10B981;">💸 Add Payment / Advance</h3>
+            <div class="row">
+                <div class="col"><label>Date</label><input id="payDate" type="date"></div>
+                <div class="col"><label>Name</label><input id="payName" type="text" placeholder="Enter Name"></div>
+                <div class="col"><label>Amount</label><input id="payAmount" type="number" placeholder="Enter Amount"></div>
+            </div>
+            <button onclick="addPayment()" style="width: 100%; background: #10B981; margin-top: 10px;">➕ Save Payment</button>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <label>ఫైల్ పేరు / File & Heading Name</label>
+            <input id="exportFileName" type="text" placeholder="Type name to change header..." oninput="syncHeader(this.value)" style="margin: 5px 0 15px 0; width: 100%; box-sizing: border-box; padding: 10px; text-transform: uppercase;">
+        </div>
+
+        <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 20px;">
+           
+            <button onclick="openSavedNotebooksModal()" style="flex:1; background:#4F46E5;">📂 Sheets</button>
+            <button onclick="startNewLedger()" style="flex:1; background:#F59E0B;">➕ New</button>
+            <button onclick="exportToImage()" style="flex:1; background:#3B82F6;">🖼 IMG</button>
+            <button onclick="exportToPDF()" style="flex:1; background:#EF4444;">📄 PDF</button>
+            <button onclick="exportToExcel()" style="flex:1; background:#10B981;">📊 XLS</button>
+        </div>
+
+        <div id="printableArea" style="background: white; padding: 15px; border-radius: 8px;">
+            
+            <div style="overflow-x: auto; margin-bottom: 30px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 900px;">
+                    <thead>
+                        <tr style="background:#2E7D32; color:white;"><th id="notebookHeader" colspan="15" style="padding:10px; text-align:center; font-size:18px;">Notebook Ledger</th></tr>
+                        <tr style="background:#eee; color:black;">
+                            <th style="padding: 5px; border: 1px solid #ccc;">DATE</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">VEHICLE</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">MC</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">NET WT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">NET WEIGHT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">MC</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">MC CUT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">FINAL WEIGHT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">RATE</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">AMOUNT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">FRIGHTDIF</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">FRIGHT</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">RUSUM</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">NET AMOUNT</th>
+                            <th data-html2canvas-ignore="true" style="padding: 5px; border: 1px solid #ccc;">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notebookList"></tbody>
+                </table>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <h3 style="color: #10B981; margin-bottom: 10px; margin-top: 0;">💸 Payments & Advances</h3>
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 500px;">
+                    <thead>
+                        <tr style="background:#eee; color:black;">
+                            <th style="padding: 5px; border: 1px solid #ccc;">Date</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">Name</th>
+                            <th style="padding: 5px; border: 1px solid #ccc;">Amount</th>
+                            <th data-html2canvas-ignore="true" style="padding: 5px; border: 1px solid #ccc; text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentList"></tbody>
+                </table>
+            </div>
+            
+        </div>
+        </div>
+</div>
+
+<div id="savedNotebooksOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+    <div style="background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; max-height: 80vh; overflow-y: auto; color: black; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        <h2 style="margin-top: 0; border-bottom: 2px solid #ccc; padding-bottom: 10px;">📂 Your Saved Sheets</h2>
+        <div id="savedNotebooksList" style="margin-bottom: 20px;"></div>
+        <button onclick="document.getElementById('savedNotebooksOverlay').style.display='none'" style="width: 100%; background: #6B7280;">Close</button>
+    </div>
+</div>
+
+<div id="customAlertOverlay"></div>
+<div id="customConfirmOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:9999;">
+    <div class="confirm-box" style="background: white; padding: 25px; border-radius: 12px; text-align: center; max-width: 300px;">
+        <p id="confirmMessage" style="font-size: 18px; margin-bottom: 20px; color: black;">Are you sure?</p>
+        <button id="btnYes" style="background: #EF4444; margin:5px;">Yes</button>
+        <button onclick="document.getElementById('customConfirmOverlay').style.display='none'" style="background: #6B7280; margin:5px;">Cancel</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/calculations.js"></script>
+<script src="js/main.js"></script>
+<script src="js/preview.js"></script>
+<script src="js/note.js"></script>
+<script src="js/history.js"></script>
+<script src="js/theme.js"></script> 
+<script src="js/notebook.js"></script>
+</body>
+</html>

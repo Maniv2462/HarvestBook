@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InstantFarms</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header" style="position: sticky; top: 0; z-index: 1000; display: flex; justify-content: center; align-items: center;">    <h1 style="margin: 0;">🌿 INSTANTFARMS</h1>
+    <button onclick="toggleTheme()" id="themeBtn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); margin: 0; padding: 6px 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); box-shadow: none; border-radius: 6px; color: white; cursor: pointer;">🌙 Dark</button>
+</header>
+
+<div class="container">
+
+    <div id="screen0" class="screen">
+
+        <h1><center>📋<i><u>రైతు డెలివరీ నోట్</u></i></center></h1>
+
+        <div class="row">
+            <div class="col">
+                <label>రైతు పేరు / Farmer Name *</label>
+                <input id="farmerName" type="text" placeholder="రైతు పేరు" required>
+            </div>
+            <div class="col">
+                <label>తేదీ / Date</label>
+                <input id="date" type="date" placeholder="తేదీ">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label>అడ్రస్సు / Address</label>
+                <input id="address" placeholder="అడ్రస్సు">
+            </div>
+            <div class="col">
+                <label>ఎచ్చట నుండి / From</label>
+                <input id="from" placeholder="ఎచ్చట నుండి">
+            </div>
+            <div class="col">
+                <label>ఎచ్చటకు / To</label>
+                <input id="to" placeholder="ఎచ్చటకు">
+            </div>
+        </div>
+
+        <h2>🌾 పంట వివరాలు / Crop Details</h2>
+        <div class="row">
+            <div class="col">
+                <label>సరుకుల వివరం / Product</label>
+                <input id="product" placeholder="సరుకుల వివరం">
+            </div>
+            <div class="col">
+                <label>మొత్తం తూకం / Weight</label>
+                <input id="weight" type="number" placeholder="మొత్తం తూకం">
+            </div>
+            <div class="col">
+                <label>ధర / Rate</label>
+                <input id="rate" type="number" placeholder="ధర">
+            </div>
+            <div class="col">
+                <label>మొత్తం ఖరీదు / Total</label>
+                <input id="total" value="Kataprakaram" placeholder="మొత్తం ఖరీదు">
+            </div>
+        </div>
+
+        <h2>🚛 వాహన వివరాలు / Vehicle Details</h2>
+        <div class="row">
+            <div class="col">
+                <label>వాహనం నెంబర్ / Vehicle Number</label>
+                <input id="vehicle" placeholder="వాహనం నెంబర్">
+            </div>
+            <div class="col">
+                <label>ఓనర్ పేరు / Driver Name</label>
+                <input id="driver" placeholder="ఓనర్ పేరు">
+            </div>
+        </div>
+
+        <h2>🏪 అమ్మకం స్థలం / Sale Destination</h2>
+        <div class="row">
+            <div class="col">
+                <label>విక్రమునుకై ఎవరి కొట్టుకు తీసుకొని వెళ్ళుచున్నది వారి అడ్రస్సు</label>
+                <input id="saleAddress" placeholder="Manual Address">
+                <input id="saleAddressAuto" readonly class="hidden">
+            </div>
+        </div>
+
+        <h2>📝 గమనిక / Special Note</h2>
+        <div class="row">
+            <div class="col">
+                <label>ఏదైనా అదనపు సమాచారం (Optional)</label>
+                <textarea id="specialNote" rows="3" placeholder="ఇక్కడ వ్రాయండి / Write any extra details here..." style="width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+        </div>
+
+        <h2>💰 ఖాతా వివరాలు / Account Details</h2>
+        <div class="row">
+            <div class="col">
+                <label>కిరాయి / Hire</label>
+                <input id="hire" type="number">
+            </div>
+            <div class="col">
+                <label>అడ్వాన్స్ / Extra</label>
+                <input id="extra" type="number">
+            </div>
+            <div class="col">
+                <label>బ్యాలెన్స్ / Final Amount</label>
+                <input id="final" readonly>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button onclick="goToPreview()" style="width: 100%;">👁 Preview</button>
+            <button onclick="toggleHistory()" id="historyBtn" style="width: 100%; background-color: #6B7280;">📜 History</button>
+        </div>
+
+        <div id="historyContainer" class="hidden" style="margin-top: 20px; border-top: 2px solid var(--border-color); padding-top: 20px;">
+            <h2 style="margin-top: 0;">📜 గత చరిత్ర / Past Notes</h2>
+            <div id="historyList" style="max-height: 350px; overflow-y: auto; padding-right: 5px;"></div>
+        </div>
+    </div>
+
+    <div id="screen1" class="screen hidden">
+        <h2>👁 Preview / ప్రివ్యూ</h2>
+
+        <div id="previewData"></div>
+
+        <h3>✍️ సంతకం చేయండి / Sign Here</h3>
+        <canvas id="previewSignature" width="300" height="120"></canvas><br>
+
+        <button onclick="clearPreviewSignature()">Clear Signature</button>
+        <button onclick="goScreen(0)">✏️ Edit</button>
+        <button onclick="location.reload()">❌ Cancel</button>
+        <button onclick="generateNote()">🖼 Generate Note</button>
+    </div>
+
+    <div id="screen2" class="screen hidden">
+        <div id="note">
+            <p id="noteNumber"></p>
+            <div id="noteContent"></div>
+        </div>
+
+        <button onclick="goScreen(0)">✏️ Edit</button>
+        <button onclick="location.reload()">🔄 New</button>
+        <button onclick="window.print()">🖨 Print</button>
+
+        <button onclick="downloadImage()">⬇ Download</button>
+        <button onclick="shareImage()" style="background-color: #25D366;">📲 Share</button>
+    </div>
+    
+    <div id="screen3" class="screen hidden">
+        <h2>📜 గత చరిత్ర / Past Notes</h2>
+        <div id="historyList" style="max-height: 400px; overflow-y: auto; padding-right: 5px;"></div>
+        
+        <button onclick="goScreen(0)" style="width: 100%; background-color: #6B7280; margin-top: 20px;">🔙 Back to Form</button>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="js/calculations.js"></script>
+<script src="js/main.js"></script>
+<script src="js/preview.js"></script>
+<script src="js/note.js"></script>
+<script src="js/history.js"></script>
+<script src="js/theme.js"></script> </body>
+</html>

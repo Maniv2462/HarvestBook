@@ -1,0 +1,329 @@
+/* =========================================
+   FRESH AGRICULTURE COLOR PALETTE
+   ========================================= */
+:root {
+    --bg-color: #F4F7F4;       /* Very soft, clean earthy white */
+    --container-bg: #FFFFFF;   /* Crisp White Form Background */
+    --primary-color: #2E7D32;  /* Professional Forest Green */
+    --primary-hover: #1B5E20;  /* Darker Green for hover states */
+    --accent-color: #4CAF50;   /* Fresh Leaf Green for focus rings */
+    --text-main: #2D3748;      /* Deep Slate for high readability */
+    --text-muted: #6B7280;     /* Muted text for secondary labels */
+    --border-color: #D1E8D5;   /* Light green-tinted borders */
+}
+
+/* GLOBAL STYLES */
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    color: var(--text-main);
+    background-color: var(--bg-color); 
+    -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.header {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 24px 20px;
+    box-shadow: 0 4px 6px -1px rgba(46, 125, 50, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 950px;
+    margin: 40px auto;
+    background: var(--container-bg); 
+    padding: 40px;
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    border: 1px solid #E5E7EB;
+}
+
+/* HORIZONTAL FORM LAYOUT */
+.row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; 
+    margin-bottom: 15px;
+}
+
+.col {
+    flex: 1; 
+    min-width: 220px; 
+}
+
+/* HEADINGS */
+h2 {
+    color: var(--primary-color);
+    font-size: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* LABELS */
+label {
+    font-weight: 600;
+    display: block;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* INPUTS & TEXTAREAS */
+input, textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg); /* UPDATED to change in dark mode */
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box; 
+    font-size: 16px;
+    color: var(--text-main);
+    font-family: inherit;
+}
+
+/* INPUT FOCUS EFFECT */
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    background-color: var(--container-bg); /* UPDATED */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
+
+/* READONLY INPUTS */
+input[readonly] {
+    background-color: var(--readonly-bg); /* UPDATED */
+    color: var(--text-muted);
+    cursor: not-allowed;
+    border-color: var(--border-color);
+}
+
+/* BUTTONS */
+button {
+    margin: 20px 10px 10px 0;
+    padding: 14px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.2);
+}
+
+/* BUTTON HOVER */
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(27, 94, 32, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* PREVIEW SIGNATURE PAD */
+#previewSignature {
+    border: 2px dashed var(--accent-color);
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: crosshair;
+    width: 100%;
+    max-width: 350px;
+    height: 140px;
+    background: #F8FAF8;
+    transition: border 0.3s;
+}
+
+#previewSignature:active {
+    border-color: var(--primary-color);
+}
+
+/* FINAL NOTE CONTAINER */
+#note {
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 8px;
+    background: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+/* HIDDEN UTILITY */
+.hidden {
+    display: none;
+}
+
+/* SUCCESS GREEN INPUT STYLE (Refined) */
+.input-filled-green {
+    background-color: #E8F5E9 !important; 
+    border: 1px solid var(--accent-color) !important; 
+    color: var(--primary-hover) !important; 
+    font-weight: bold;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* ========================= */
+/* 📱 MOBILE (0px - 600px) */
+/* ========================= */
+@media (max-width: 600px) {
+    .container {
+        margin: 15px;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    label {
+        margin-top: 15px;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-top: 30px;
+    }
+
+    input, textarea {
+        font-size: 16px; 
+        padding: 12px;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+/* ========================= */
+/* 📲 TABLET (601px - 900px) */
+/* ========================= */
+@media (min-width: 601px) and (max-width: 900px) {
+    .container {
+        margin: 20px;
+        padding: 30px;
+    }
+
+    button {
+        width: 48%; 
+    }
+}
+
+/* ========================= */
+/* 🖨 PRINT STYLE */
+/* ========================= */
+@media print {
+    body { background: white; }
+    body * { visibility: hidden; }
+    #note, #note * { visibility: visible; }
+    #note {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border: none; 
+        padding: 0;
+        box-shadow: none;
+    }
+}
+
+/* =========================================
+   FRESH AGRICULTURE COLOR PALETTE (LIGHT)
+   ========================================= */
+:root {
+    --bg-color: #F4F7F4;       
+    --container-bg: #FFFFFF;   
+    --input-bg: #FAFAFA;       /* NEW: Variable for input boxes */
+    --readonly-bg: #F3F4F6;    /* NEW: Variable for locked boxes */
+    --primary-color: #2E7D32;  
+    --primary-hover: #1B5E20;  
+    --accent-color: #4CAF50;   
+    --text-main: #2D3748;      
+    --text-muted: #6B7280;     
+    --border-color: #D1E8D5;   
+}
+
+/* =========================================
+   ULTRA-PROFESSIONAL DARK THEME
+   ========================================= */
+body.dark-theme {
+    --bg-color: #131314;       /* Deep Premium Tech Dark (Like AI apps) */
+    --container-bg: #1E1E1E;   /* Smooth Elevated Surface */
+    --input-bg: #2B2D31;       /* Sleek dark grey input boxes */
+    --readonly-bg: #1A1A1C;    /* Even darker for locked inputs */
+    --primary-color: #34A853;  /* Bright modern green for buttons */
+    --primary-hover: #2E8B47;  
+    --accent-color: #81C784;   /* Soft green glow for focus rings */
+    --text-main: #E8EAED;      /* Crisp, eye-friendly soft white */
+    --text-muted: #9AA0A6;     /* Professional grey for labels */
+    --border-color: #3C4043;   /* Very subtle, clean borders */
+}
+
+/* Custom On-Page Alert */
+#customAlertOverlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Confirmation Modal */
+#customConfirmOverlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.confirm-box button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
