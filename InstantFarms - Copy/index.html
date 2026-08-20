@@ -99,7 +99,7 @@
                 <div class="col"><label>Name</label><input id="payName" type="text" placeholder="Enter Name"></div>
                 <div class="col"><label>Amount</label><input id="payAmount" type="number" placeholder="Enter Amount"></div>
             </div>
-            <button onclick="addPayment()" style="width: 100%; background: #10B981; margin-top: 10px;">➕ Save Payment</button>
+            <button id="paySaveBtn" onclick="addPayment()" style="background:#10B981;">➕ Add</button>
         </div>
         
         <div style="margin-top: 15px;">
@@ -108,13 +108,13 @@
         </div>
 
         <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 20px;">
-           
             <button onclick="openSavedNotebooksModal()" style="flex:1; background:#4F46E5;">📂 Sheets</button>
             <button onclick="startNewLedger()" style="flex:1; background:#F59E0B;">➕ New</button>
             <button onclick="exportToImage()" style="flex:1; background:#3B82F6;">🖼 IMG</button>
             <button onclick="exportToPDF()" style="flex:1; background:#EF4444;">📄 PDF</button>
             <button onclick="exportToExcel()" style="flex:1; background:#10B981;">📊 XLS</button>
-        </div>
+            <button onclick="shareToWhatsApp()" style="flex:1; background:#25D366;">💬 WA Share</button>
+        </div>      
 
         <div id="printableArea" style="background: white; padding: 15px; border-radius: 8px;">
             
